@@ -1,11 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, OneToMany, ManyToMany, ManyToOne } from 'typeorm';
-import { UsersEntity} from '../users/users.entity';
+import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, OneToMany, ManyToOne } from 'typeorm';
+import { UsersEntity } from '../users/users.entity';
+import { LikesEntity } from '../likes/likes.entity';
 
 @Entity('notes')
 export class NotesEntity {
+  @OneToMany(type => LikesEntity, likes => likes.noteId)
   @PrimaryGeneratedColumn('uuid') 
   id: string;
-
+  
+  @Column({
+    type:'text',
+    nullable:false
+  })
   @ManyToOne(type => UsersEntity, user => user.id)
   author:string;
 
@@ -18,11 +24,19 @@ export class NotesEntity {
     type:'text',
     nullable:true
   })
-  date_publictaion: Date;
+  datePublictaion: Date;
 
 
   @Column({
-    type:'text',
+    type:'simple-json',
+    nullable:true
   })
-  tags: string[];
+  tags: string;
+
+  @Column({
+    type:'integer',
+    nullable:true,
+    default:0
+  })
+  likes: number;
 }

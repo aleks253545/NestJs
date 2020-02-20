@@ -7,5 +7,6 @@ export interface UsersDTO {
   password: string,
   rateLike: number,
   rateLastLike:number,
-  rateActivity:number
+  rateActivity:number,
+  lastLikeCount:number
 }

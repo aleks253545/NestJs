@@ -1,9 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column,OneToMany } from 'typeorm';
-import {NotesEntity} from '../notes/notes.entity';
+import { LikesEntity } from '../likes/likes.entity';
 
 @Entity('users')
 export class UsersEntity {
-  @OneToMany(type => NotesEntity, notes => notes.author)
+  @OneToMany(type => LikesEntity, likes => likes.userId)
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -59,15 +59,36 @@ export class UsersEntity {
   rateActivity: number;
 
   @Column({
-    type:'text',
-    default:[]
-  })
-  uniqeNotes: string[]
-
-  @Column({
-    type:'text',
-    default:[],
+    type:'simple-array',
     nullable:true
   })
-  lastNotes:string[]
+  uniqueTags:string[];
+
+  @Column({
+    type:'simple-array',
+    nullable:true,
+  })
+  lastNotes:string[];
+
+  @Column({
+    type:'integer',
+    nullable:true,
+    default:0
+  })
+  totalCountLikes: number;
+
+  @Column({
+    type:'integer',
+    nullable:true,
+    default:0
+  })
+  lastLikeCount: number;
+
+  @Column({
+    type:'integer',
+    nullable:true,
+    default:0
+  })
+  lastPostCount: number;
+
 }

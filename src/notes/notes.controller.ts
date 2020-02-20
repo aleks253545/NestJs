@@ -2,36 +2,35 @@ import { Controller, Get, Post, Delete, Put, Body, Param } from '@nestjs/common'
 import { NotesEntity } from './notes.entity';
 import { NotesService } from './notes.service';
 import { NotesDTO} from './notes.dto'
+import { UsersService } from 'src/users/users.service';
 
 @Controller('notes')
 export class NotesController {
-  constructor(private NotesEntity: NotesService) {}
+  constructor(
+    private readonly NotesService: NotesService
+    ) {}
   @Get()
   showAllusers() {
-    return this.NotesEntity.showAll();
+    return this.NotesService.showAll();
   }
 
   @Post()
-  createNote(@Body() data: NotesDTO): Promise<NotesEntity>{ 
-    return this.NotesEntity.create(data);
+  createNote(@Body() data: NotesDTO){  
+    return this.NotesService.create(data);
   }
 
   @Get(':id')
-  readuser(@Param('id') id:string) {
-    return this.NotesEntity.read(id);
+  readNote(@Param('id') id:string) {
+    return this.NotesService.read(id);
   }
-
-  // @Put()
-  // updateUser(@Param('id') id:string, @Body() data) {
-  //   return this.NotesEntity.update(id, data)
-  // }
+  
   @Put(':id')
-  updateTags(@Param('id') id:string, @Body() data) {
-    return this.NotesEntity.update(id, data)
+  updateNote(@Param('id') id:string, @Body() data) {
+    return this.NotesService.update(id, data)
   }
 
   @Delete(':id')
-  destroyUser(@Param('id') id: string) {
-    return this.NotesEntity.destroy(id)
+  destroyNote(@Param('id') id: string) {
+    return this.NotesService.destroy(id)
   }
 }
