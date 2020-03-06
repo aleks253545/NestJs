@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Put, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Put, Body, Param, Query } from '@nestjs/common';
 import { UsersEntity } from './users.entity';
 import { UsersService } from './users.service';
 import { UsersDTO} from './users.dto'
@@ -7,8 +7,9 @@ import { UsersDTO} from './users.dto'
 export class UsersController {
   constructor(private UserService: UsersService) {}
   @Get()
-  showAllusers() {
-    return this.UserService.showAll();
+  readByLog(@Query('login') login: string,
+  @Query('password') password: string) {
+    return this.UserService.readByLog(login,password);
   }
 
   @Post()

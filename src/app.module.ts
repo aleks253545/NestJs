@@ -2,15 +2,18 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { UsersModule } from './users/users.module';
-import { NotesController } from './notes/notes.controller';
-import { NotesService } from './notes/notes.service';
-import { NotesModule } from './notes/notes.module';
-import { LikesController } from './likes/likes.controller';
-import { LikesService } from './likes/likes.service';
-import { LikesModule } from './likes/likes.module';
+import { ProductsController } from './products/products.controller';
+import { ProductsService } from './products/products.service';
+import { ProductsModule } from './products/products.module';
+import { CartsController } from './carts/carts.controller';
+import { CartsService } from './carts/carts.service';
+import { CartsModule } from './carts/carts.module';
 import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
 import { ScheduleModule } from '@nestjs/schedule';
+import { CountersController } from './counters/counters.controller';
+import { CountersService } from './counters/counters.service';
+import { CountersModule} from './counters/products.module'
 
 @Module({
   imports: [
@@ -25,12 +28,12 @@ import { ScheduleModule } from '@nestjs/schedule';
       synchronize: true,
     }),
     UsersModule,
-    NotesModule,
-    LikesModule,
+    ProductsModule,
+    CartsModule,
     ScheduleModule.forRoot()
   ],
-  controllers: [NotesController, LikesController, UsersController],
-  providers: [NotesService, LikesService, UsersService],
+  controllers: [ProductsController, CartsController, UsersController,CountersController],
+  providers: [ProductsService, CartsService, UsersService,CountersService],
 })
 export class AppModule {
 }
