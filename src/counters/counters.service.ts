@@ -24,13 +24,12 @@ export class CountersService {
     private readonly logger = new Logger(CountersService.name);
 
     async update( id: string, data:{value:number}) {
-      this.logger.debug(data.value);
       const prodTotalQuantity = + await client.get(id.toString()),
       prodCounter  =  + await  client.hget('products',id.toString());
-      if(prodTotalQuantity > 1 &&  data.value <= prodCounter){
+      if(data.value > 0  &&  data.value < prodTotalQuantity || data.value === prodTotalQuantity){
         await client.hmset('products',id.toString(),data.value.toString());
       }
-      return  data.value;
+      return  + await  client.hget('products',id.toString());
     }
 
     async destroy(data: {userdId: string, productId: string}) {

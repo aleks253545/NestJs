@@ -26,7 +26,12 @@ export class ProductsService {
     }
 
     async setCounter (product) {
-      await client.hmset('products',product.id.toString(),'1');
+      const totalQuantity = await + client.get(product.id);
+      if( totalQuantity > 0 ){
+        await client.hmset('products',product.id.toString(),'1');
+      } else { 
+        await client.hmset('products',product.id.toString(),'0');
+      }
       product.quantity =  + await  client.hget('products',product.id.toString());
       return product
     }

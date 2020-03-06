@@ -14,10 +14,12 @@ export class CartsController {
     return this.LikesService.create(data);
   }
 
-  @Get(':id')
-  getAllCartRecord(@Param('id') id:string) {
-    return this.LikesService.read(id);
+  @Get()
+  getAllCartRecord() {
+    return this.LikesService.read();
   }
+
+
   
   @Delete()
   destroyCartRecord(@Body() data:{noteId:string, userId:string }) {
